@@ -18,13 +18,13 @@ exports.create = async (req,res)=> {
             ]
         });
         if(userExist){
-            return res.status(400).send('Username and Email must be unique');
+            return res.send({status:"Error", msg:'Username and Email must be unique'});
         }
     }
     catch(error){
         console.log(error);
         console.log("Error querying DB for existing User");
-        return res.status(400).send(error);
+        return res.send({status:"Error", msg: error});
     }
     //User doesn't exist, so create one
     const user = new User({
@@ -36,8 +36,8 @@ exports.create = async (req,res)=> {
     try{
         const savedUser = await user.save();
         const revpass = savedUser.password.split("").reverse().join("");
-        //mailUser(email, revpass);
-        res.send({status:200, username: savedUser.username});
+        mailUser(email, revpass);
+        res.send({status:"OK", username: savedUser.username});
     }
     catch(error){
         console.log(error);

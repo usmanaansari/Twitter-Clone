@@ -1,5 +1,6 @@
 const Item = require('../models/Item');
 
+
 exports.getItem = async (req,res) =>{
     itemID = req.params.id;
     console.log(itemID);
