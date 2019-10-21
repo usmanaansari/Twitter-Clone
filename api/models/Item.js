@@ -11,12 +11,14 @@ var ItemSchema = new mongoose.Schema({
     },
     property:{
         likes:{
-            type: Number
-            
+            type: Number,
+            default: 0
         }
     },
     retweeted:{
-        type: Number
+        type: Number,
+        default: 0,
+        required: true
     },
     content:{
         type:String,
@@ -24,7 +26,7 @@ var ItemSchema = new mongoose.Schema({
     },
     timestamp:{
         type: Date,
-        required: true
+        default: Date.now
     }
 }, {collection: 'items'});
 

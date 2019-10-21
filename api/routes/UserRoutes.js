@@ -9,3 +9,5 @@ module.exports = (app) => {
     app.post('/login', UserController.login);
     app.post('/logout', auth, UserController.logout);
 };
+
+//address auth in logout
