@@ -7,6 +7,7 @@ const app = express();
 //Add User Routes
 const configDefaults = require('./myConfig/default.json');
 
+
 const connectDB = async() => {
 	try{
 		await mongoose.connect(configDefaults.mongoURI);
@@ -28,5 +29,8 @@ connectDB();
 app.listen(3000, () => console.log('Server running on port 3000'));
 
 app.get("/", (req,res) => {
-	res.status(200).send("Hello my duuuude");
+	res.sendFile(__dirname + "/" + "public/HTML/index.html");
 });
+
+
+

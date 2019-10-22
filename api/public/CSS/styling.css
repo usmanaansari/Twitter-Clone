@@ -1,0 +1,22 @@
+
+body{
+    background-color: blue;
+}
+adduserform{
+    background-color: rgb(193, 154, 255);
+    text-align: center;
+}
+
+verifyform{
+    text-align: center
+}
+
+label{
+    display: inline-block;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+loginform{
+    text-align: center
+}

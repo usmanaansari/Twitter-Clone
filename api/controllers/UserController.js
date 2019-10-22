@@ -109,7 +109,7 @@ exports.login = async (req,res) =>{
                     if(err) console.log(err);
                     else{
                         var utc = new Date().toJSON().slice(0,10).replace(/-/g, '/');
-                        res.cookie('token', token).send({status:"OK"});
+                        res.cookie('token', token).send({status:"OK", msg:existingUser.username + " is now logged in!"});
                     }
                 });
             }
@@ -126,5 +126,5 @@ exports.login = async (req,res) =>{
 exports.logout = async (req,res) => {
     //blacklist jwt token
     res.clearCookie('token');
-    res.send({status:"OK"});
+    res.send({status:"OK", msg:"User has logged out!"});
 };

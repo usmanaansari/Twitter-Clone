@@ -24,7 +24,7 @@ exports.addItem = async (req,res) =>{
     //console.log("printing current user's username");
     //console.log(currentUser.username);
     const newItem = Item({
-        id: Math.floor((Math.random()*1000)+1),
+        id: Math.floor((Math.random()*5000)+1),
         username: currentUser.username,
         content: content
     });

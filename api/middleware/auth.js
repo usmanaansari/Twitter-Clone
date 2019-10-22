@@ -6,7 +6,7 @@ module.exports = function(req,res,next){
     const token = req.cookies.token
 
     if(!token){
-        return res.send({status:"error", msg: "Token not defined"});
+        return res.send({status:"error", msg: "Token not defined, there may be no logged in user!"});
     }
 
     //Verify token
