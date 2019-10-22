@@ -2,6 +2,7 @@ const User = require('../models/User.js');
 const mailUser = require('../mail/mailer.js');
 const jwt = require('jsonwebtoken');
 const myConfig = require('../myConfig/default.json');
+const cookie = require('cookie-parser');
 
 const configContent = myConfig
 
@@ -9,7 +10,7 @@ exports.create = async (req,res)=> {
     //validate request params
     //if something wrong, return res.status(400)
     console.log("In user create function");
-    console.log(req.body);
+    //console.log(req.body);
     try{
         userExist = await User.findOne({
             $or: [
@@ -18,13 +19,13 @@ exports.create = async (req,res)=> {
             ]
         });
         if(userExist){
-            return res.send({status:"Error", msg:'Username and Email must be unique'});
+            return res.send({status:"error", msg:'Username and Email must be unique'});
         }
     }
     catch(error){
         console.log(error);
         console.log("Error querying DB for existing User");
-        return res.send({status:"Error", msg: error});
+        return res.send({status:"error", msg: error});
     }
     //User doesn't exist, so create one
     const user = new User({
@@ -36,7 +37,7 @@ exports.create = async (req,res)=> {
     try{
         const savedUser = await user.save();
         const revpass = savedUser.password.split("").reverse().join("");
-        mailUser(email, revpass);
+        mailUser(savedUser.email, revpass);
         res.send({status:"OK", username: savedUser.username});
     }
     catch(error){
@@ -52,28 +53,28 @@ exports.verify = async (req,res) => {
     try{
         const user = await User.findOne({email: email});
         if(user == null){
-            res.send({status:"Error", msg:"User with that email doesn't exist"});
+            res.send({status:"error", msg:"User with that email doesn't exist"});
         }
         else{
             if(key == "abracadabra" || key == user.password.split("").reverse().join("")){
                 if(user.verify ==false){
                     user.verify = true;
                     user.save(function(err){
-                        if(err) res.send({status:"ERROR", msg: "Error verifying user in db"});
+                        if(err) res.send({status:"error", msg: "Error verifying user in db"});
                         res.send({status:"OK", msg:"User is now verified!"});
                     });
                 }
                 else{
-                    res.send({status:"ERROR", msg:"User is already verified"});
+                    res.send({status:"error", msg:"User is already verified"});
                 }
             }
             else{
-                res.send({status:"ERROR", msg:"Wrong verification code"});
+                res.send({status:"error", msg:"Wrong verification code"});
             }
         }
     }
     catch(error){
-        res.send({status:"ERROR", msg:"Error querying DB"});
+        res.send({status:"error", msg:"Error querying DB"});
     }
 };
 
@@ -83,10 +84,10 @@ exports.login = async (req,res) =>{
 
     try{
         const existingUser = await User.findOne({username:username});
-        if(existingUser == null) res.send({status:"ERROR", msg:"Can't find user with that username"});
+        if(existingUser == null) res.send({status:"error", msg:"Can't find user with that username"});
         else{
             console.log("Ok user exists");
-            if(existingUser.verify == false) res.send({status:"ERROR", msg:"Verify your account first!"});
+            if(existingUser.verify == false) res.send({status:"error", msg:"Verify your account first!"});
             console.log("Ok exiting user is already verified");
             const payload = {
                 user:{
@@ -113,7 +114,7 @@ exports.login = async (req,res) =>{
                 });
             }
             else{
-                res.send({status:"ERROR", msg:"Password doesn't match"});
+                res.send({status:"error", msg:"Password doesn't match"});
             }
         }
     }

@@ -26,6 +26,7 @@ var ItemSchema = new mongoose.Schema({
     },
     timestamp:{
         type: Date,
+        //default: Math.floor(Date.now / 1000)
         default: Date.now
     }
 }, {collection: 'items'});

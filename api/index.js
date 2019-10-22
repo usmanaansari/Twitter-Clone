@@ -19,7 +19,7 @@ const connectDB = async() => {
 }
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
-//app.use(cookie);
+app.use(cookie());
 require('./routes/UserRoutes.js')(app);
 require('./routes/ItemRoutes.js')(app);
 require('./routes/SearchRoutes.js')(app);
