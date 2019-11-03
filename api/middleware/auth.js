@@ -2,7 +2,7 @@ const jwt = require('jsonwebtoken');
 const configFile = require('../myConfig/default.json');
 
 module.exports = function(req,res,next){
-    console.log(req.cookies);
+    //console.log(req.cookies);
     const token = req.cookies.token
 
     if(!token){
@@ -17,9 +17,9 @@ module.exports = function(req,res,next){
                 res.send({status: "error", msg:"Could not verify token"});
             }
             else{
-                console.log("decoded user");
-                console.log(decoded.user);
-                console.log("printed decoded user");
+                //console.log("decoded user");
+                //console.log(decoded.user);
+                //console.log("printed decoded user");
                 req.user = decoded.user;
                 next();
             }

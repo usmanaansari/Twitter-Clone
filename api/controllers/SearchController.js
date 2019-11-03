@@ -3,6 +3,23 @@ const Item = require('../models/Item');
 exports.search = async (req,res) => {
     const timeGiven = req.body.timestamp;
     var limitGiven = req.body.limit;
+    var usernameGiven = req.body.username;
+    var followingGiven = req.body.following;
+    var queryGiven = req.body.q;
+    console.log(usernameGiven);
+    console.log(queryGiven);
+    var query = {
+        '$and': []
+    };
+    /*
+        {timestamp:{ $lte: timeNow*1000}} needs to be applied to every query
+        However, a username can be supplied, therefore
+        { username: username } needs to be added
+        However, a query can be supplied therefore
+        { $text : { $search : q} } needs to be added
+
+    */
+
     //console.log(timeGiven);
     console.log("Item limit recieved: " + limitGiven);
     var limit = 0;
@@ -33,9 +50,30 @@ exports.search = async (req,res) => {
             limit = 25;
         }
     }
+    //Push timestamp query
+    query['$and'].push({timestamp:{ $lte: timeNow*1000}});
+
+    if(queryGiven === "" || typeof queryGiven === 'undefined' || typeof queryGiven === 'null'){
+        console.log("No query given");
+    }
+    else{
+        // Item.find( { $text : { $search : q} } )
+        query['$and'].push( { $text: {$search : queryGiven} });
+
+    }
+    if(usernameGiven === "" || typeof usernameGiven === 'undefined' || typeof usernameGiven === 'null'){
+        //Dont filter by username
+    }
+    else{
+        // Return items only by that username
+        query['$and'].push( { username: usernameGiven} );
+    }
+
+    console.log("The query to be used is " + query['$and']);
+
     console.log("Limit to be used is " + limit);
     try{
-        const foundItems = await Item.find({timestamp:{ $lte: timeNow*1000}}).select('-_id -__v').limit(limit);
+        const foundItems = await Item.find(query).select('-_id -__v').limit(limit);
         if(foundItems == null){
             res.send({status:"error", msg: "No items found"});
         }

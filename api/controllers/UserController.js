@@ -11,6 +11,9 @@ exports.create = async (req,res)=> {
     //if something wrong, return res.status(400)
     console.log("In user create function");
     //console.log(req.body);
+    if(req.body.username === "" | req.body.password === "" | req.body.email === ""){
+        res.send({status:"error", msg:"Missing field(s)"});
+    }
     try{
         userExist = await User.findOne({
             $or: [
@@ -37,7 +40,7 @@ exports.create = async (req,res)=> {
     try{
         const savedUser = await user.save();
         const revpass = savedUser.password.split("").reverse().join("");
-        mailUser(savedUser.email, revpass);
+        //mailUser(savedUser.email, revpass);
         res.send({status:"OK", username: savedUser.username});
     }
     catch(error){

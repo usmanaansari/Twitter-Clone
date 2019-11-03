@@ -16,6 +16,12 @@ var UserSchema = new mongoose.Schema({
     },
     verify:{
         type:Boolean
+    },
+    following: {
+        type: Array
+    },
+    followers: {
+        type: Array
     }
 }, {collection: 'siteusers'});
 

@@ -1,5 +1,5 @@
 const Item = require('../models/Item');
-
+const uuidv4 = require('uuid/v4');
 
 exports.getItem = async (req,res) =>{
     itemID = req.params.id;
@@ -23,8 +23,9 @@ exports.addItem = async (req,res) =>{
     //console.log(currentUser);
     //console.log("printing current user's username");
     //console.log(currentUser.username);
+    //id: Math.floor((Math.random()*5000)+1),
     const newItem = Item({
-        id: Math.floor((Math.random()*5000)+1),
+        id: uuidv4(),
         username: currentUser.username,
         content: content
     });

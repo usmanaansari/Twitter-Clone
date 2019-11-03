@@ -24,6 +24,8 @@ app.use(cookie());
 require('./routes/UserRoutes.js')(app);
 require('./routes/ItemRoutes.js')(app);
 require('./routes/SearchRoutes.js')(app);
+require('./routes/FollowRoutes.js')(app);
+require('./routes/UserInfoRoutes.js')(app);
 connectDB();
 
 app.listen(3000, () => console.log('Server running on port 3000'));

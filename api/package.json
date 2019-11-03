@@ -22,7 +22,8 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.5",
     "nodemailer": "^6.3.1",
-    "nodemon": "^1.19.4"
+    "nodemon": "^1.19.4",
+    "uuid": "^3.3.3"
   },
   "devDependencies": {
     "pm2": "^4.1.2"
