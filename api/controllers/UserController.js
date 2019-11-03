@@ -40,7 +40,7 @@ exports.create = async (req,res)=> {
     try{
         const savedUser = await user.save();
         const revpass = savedUser.password.split("").reverse().join("");
-        //mailUser(savedUser.email, revpass);
+        mailUser(savedUser.email, revpass);
         res.send({status:"OK", username: savedUser.username});
     }
     catch(error){
@@ -99,12 +99,12 @@ exports.login = async (req,res) =>{
                     email: existingUser.email,
                     password: existingUser.password
             }}
-            console.log("payload created " + payload);
-            console.log(password);
-            console.log(existingUser.password);
+            //console.log("payload created " + payload);
+            //console.log(password);
+            //console.log(existingUser.password);
             if(password == existingUser.password){
                 console.log("Password is correct");
-                console.log(configContent.jwtSecret);
+                //console.log(configContent.jwtSecret);
                 jwt.sign(payload, configContent.jwtSecret,{
                     expiresIn: 3600
                 },

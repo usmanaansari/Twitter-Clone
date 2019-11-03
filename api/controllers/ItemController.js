@@ -43,3 +43,23 @@ exports.addItem = async (req,res) =>{
     });
 
 };
+
+exports.deleteItem = async (req,res) =>{
+    itemID = req.params.id;
+    console.log(itemID);
+
+    const foundItem = await Item.findOne({id:itemID});
+    console.log(foundItem);
+    if(foundItem){
+        Item.deleteOne({id: foundItem.id}, function(err){
+            if(err) res.send({status:"error"});
+            else{
+                res.send({status:"OK", msg:"Item " + itemID + " is deleted"});
+            }
+        });
+    }
+    else{
+        res.send({status:"error", msg:"Item with that ID does not exist"});
+    }
+
+};

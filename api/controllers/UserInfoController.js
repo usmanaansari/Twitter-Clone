@@ -15,11 +15,20 @@ exports.getUser = async (req,res) => {
     }
     else{
         console.log(foundUser);
-        res.send({status:"OK", users: {
+        console.log(foundUser.email);
+
+        const numFollowers = foundUser['followers'].length;
+        const numFollowing = foundUser['following'].length;
+        
+        var user = {
             email: foundUser.email,
-            followers = foundUser.followers.length,
-            following = foundUser.following.length
-        }});
+            followers: numFollowers,
+            following: numFollowing
+        }
+
+        res.send({status:"OK", user: user});
+        
+        
     }
 };
 
@@ -45,8 +54,10 @@ exports.getPosts = async (req,res) => {
     }
 
     const usersItems = await Item.find({username: username}).select(' -_id id').limit(limit);
-
-    res.send({status:"OK", items:usersItems});
+    usersItemsMap = usersItems.map((val,index,arr)=>{
+        return val.id;
+    })
+    res.send({status:"OK", items:usersItemsMap});
     //Check params for username to get
 
     //Pass in username to getUser function
