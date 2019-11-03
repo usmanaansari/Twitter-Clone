@@ -14,28 +14,14 @@ exports.getUser = async (req,res) => {
         res.send({status:"error", msg: username + "not found"});
     }
     else{
-        user: {
+        console.log(foundUser);
+        res.send({status:"OK", users: {
             email: foundUser.email,
-            followers = foundUser.followers,
-            following = foundUser.following
-        }
-        res.send({status:"OK", user: user });
+            followers = foundUser.followers.length,
+            following = foundUser.following.length
+        }});
     }
-    //Check params for username to get
-
-    //Find user with that username in DB
-
-    /*
-        Return user object as
-        user : {
-            email: string
-            followers: follower count
-            following: following count
-        }
-    */
-
 };
-
 
 //Can call getUser function for followers, folloing, and posts
 
@@ -59,7 +45,7 @@ exports.getPosts = async (req,res) => {
     }
 
     const usersItems = await Item.find({username: username}).select(' -_id id').limit(limit);
-    
+
     res.send({status:"OK", items:usersItems});
     //Check params for username to get
 
@@ -72,24 +58,49 @@ exports.getPosts = async (req,res) => {
 };
 
 exports.getFollowers = async (req,res) => {
+    const username = req.params.username;
+    const limitGiven = req.query.limit;
 
-    //Check params for username to get
+    if(limitGiven === "" || typeof limitGiven === 'undefined' || typeof limitGiven === 'null'){
+        limit = 50;
+    }
+    else{
+        limit = Number(limitGiven);
+        if(limit > 200){
+            limit = 200;
+        }
+        else if (limit < 50){
+            limit = 50;
+        }
+    }
 
-    //Find user with that username in DB
+    const followerList = await User.find({username:username}).select( '-_id followers').limit(limit);
 
-    //Return list of followers of that User
-
-    //As users: { list of usernames (strings) }
+    res.send({status:"OK", users: followerList});
 
 };
 
 exports.getFollowing = async (req,res) => {
 
-    //Check params for username to get
+    const username = req.params.username;
+    const limitGiven = req.query.limit;
 
-    //Find user with that username in DB
+    if(limitGiven === "" || typeof limitGiven === 'undefined' || typeof limitGiven === 'null'){
+        limit = 50;
+    }
+    else{
+        limit = Number(limitGiven);
+        if(limit > 200){
+            limit = 200;
+        }
+        else if (limit < 50){
+            limit = 50;
+        }
+    }
 
+    const followingList = await User.find({username:username}).select( '-_id following').limit(limit);
 
+    res.send({status:"OK", users: followingList});
 
 };
 
