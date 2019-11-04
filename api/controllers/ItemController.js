@@ -45,21 +45,34 @@ exports.addItem = async (req,res) =>{
 };
 
 exports.deleteItem = async (req,res) =>{
+    console.log("got to delete item");
     itemID = req.params.id;
     console.log(itemID);
-
-    const foundItem = await Item.findOne({id:itemID});
-    console.log(foundItem);
-    if(foundItem){
-        Item.deleteOne({id: foundItem.id}, function(err){
-            if(err) res.send({status:"error"});
-            else{
-                res.send({status:"OK", msg:"Item " + itemID + " is deleted"});
+    
+    if(req.user){
+        console.log("Some user is logged in");
+        const foundItem = await Item.findOne({id:itemID});
+        console.log(foundItem);
+        if(foundItem){
+            console.log(req.user['username']);
+            console.log(foundItem['username']);
+            if(req.user['username'] === foundItem['username']){
+                Item.deleteOne({id: foundItem.id}, function(err){
+                    if(err) res.send({status:"error"});
+                    else{
+                        res.send({status:"OK", msg:"Item " + itemID + " is deleted"});
+                    }
+                });
             }
-        });
+            else{
+                res.status(400).send({msg: "Current user is not an owner of the item"});
+            }
+        }
+        else{
+            res.send({status:"error", msg:"Item with that ID does not exist"});
+        }
     }
     else{
-        res.send({status:"error", msg:"Item with that ID does not exist"});
+        res.send({status:"error", msg:"No user logged in"});
     }
-
 };

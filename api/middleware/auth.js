@@ -1,12 +1,23 @@
 const jwt = require('jsonwebtoken');
 const configFile = require('../myConfig/default.json');
 
-module.exports = function(req,res,next){
+module.exports = async function(req,res,next){
     //console.log(req.cookies);
     const token = req.cookies.token
 
     if(!token){
-        return res.send({status:"error", msg: "Token not defined, there may be no logged in user!"});
+        console.log(req.url);
+        if(req.url == '/search' ){
+            console.log("url is search");
+            await next();
+        }
+        else{
+            console.log("Should be error");
+            //res.status(400).send({msg: "Token not defined"});
+            res.status(400);
+            //await res.send({status:500, msg: "Token not defined, there may be no logged in user!"});
+            //return;
+        }
     }
 
     //Verify token

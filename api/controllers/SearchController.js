@@ -1,4 +1,5 @@
 const Item = require('../models/Item');
+const User = require('../models/User');
 
 exports.search = async (req,res) => {
     const timeGiven = req.body.timestamp;
@@ -6,8 +7,8 @@ exports.search = async (req,res) => {
     var usernameGiven = req.body.username;
     var followingGiven = req.body.following;
     var queryGiven = req.body.q;
-    console.log(usernameGiven);
-    console.log(queryGiven);
+    //console.log(usernameGiven);
+    //console.log(queryGiven);
     var query = {
         '$and': []
     };
@@ -21,28 +22,28 @@ exports.search = async (req,res) => {
     */
 
     //console.log(timeGiven);
-    console.log("Item limit recieved: " + limitGiven);
+    //console.log("Item limit recieved: " + limitGiven);
     var limit = 0;
     var timeNow = 0;
-    console.log("The type of limit is " + typeof limitGiven);
+    //console.log("The type of limit is " + typeof limitGiven);
     if(!timeGiven) { 
         timeNow = new Date();
-        console.log("timeGiven Null " + timeNow); 
+        //console.log("timeGiven Null " + timeNow); 
     }
     else{ 
         //timeNow = timeGiven*1000; 
         timeNow = timeGiven;
-        console.log("time was given " + timeNow);
+        //console.log("time was given " + timeNow);
     }
 
     if(limitGiven === "" || typeof limitGiven === 'undefined' || typeof limitGiven === 'null') { 
-        console.log("limit is empty string"); 
+        //console.log("limit is empty string"); 
         limit = 25; 
-        console.log("limit should be " + limit); 
+        //console.log("limit should be " + limit); 
     }
     else{ 
         limit = Number(limitGiven);
-        console.log("limit should be " + limit); 
+        //console.log("limit should be " + limit); 
         if(limit > 100){
             limit = 100;
         }
@@ -69,7 +70,30 @@ exports.search = async (req,res) => {
         query['$and'].push( { username: usernameGiven} );
     }
 
-    console.log("The query to be used is " + query['$and']);
+    if(followingGiven === true || followingGiven === "true"){
+        console.log(req.user);
+        if(req.user){
+            console.log(req.user);
+            const followingList = await User.find({username:req.user['username']}).select( '-_id following');
+            console.log(followingList);
+            const orQuery = {
+                '$or': []
+            }
+            for(var i =0; i <followingList[0]['following'].length;i++ ){
+                orQuery['$or'].push( { username: followingList[0]['following'][i]});
+            }
+            query['$and'].push(orQuery);
+            console.log(orQuery['$or'])
+            console.log(followingList);
+            //query['$and'].push();
+        }
+        else{
+
+        }
+        
+    }
+
+    console.log("The query to be used is " + toString(query['$and']));
 
     console.log("Limit to be used is " + limit);
     try{
@@ -81,8 +105,8 @@ exports.search = async (req,res) => {
             console.log("number of items returned " + foundItems.length);
             searchResults = foundItems.map((val,index,arr)=>{
                 var unixTimeStamp = Number(arr[index].timestamp)/1000;
-                console.log("The unix version is ");
-                console.log(unixTimeStamp);
+                //console.log("The unix version is ");
+                //console.log(unixTimeStamp);
                 return {id: val.id, username: val.username, property: val.property, retweeted: val.retweeted, content: val.content, timestamp: unixTimeStamp};
             });
             console.log("Length of search results " + searchResults.length);

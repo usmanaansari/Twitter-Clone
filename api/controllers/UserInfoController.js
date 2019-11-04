@@ -85,9 +85,9 @@ exports.getFollowers = async (req,res) => {
         }
     }
 
-    const followerList = await User.find({username:username}).select( '-_id followers').limit(limit);
-
-    res.send({status:"OK", users: followerList});
+    const followersArray = await User.find({username:username}).select( '-_id followers').limit(limit);
+    console.log(followersArray);
+    res.send({status:"OK", users: followersArray[0].followers});
 
 };
 
@@ -110,8 +110,14 @@ exports.getFollowing = async (req,res) => {
     }
 
     const followingList = await User.find({username:username}).select( '-_id following').limit(limit);
+    console.log(followingList[0].following);
+    //console.log(followingList[0]['following'][0]);
+    for(var i =0; i <followingList[0]['following'].length;i++ ){
+        console.log(followingList[0]['following'][i])
+    }
+    console.log(followingList[0]['following'].length);
 
-    res.send({status:"OK", users: followingList});
+    res.send({status:"OK", users: followingList[0].following});
 
 };
 
