@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+        <p><a href = "/index">Home</a></p>
+        <label>Item ID: </label>
+        <input type = "text" name = "item" id = "item">
+        <button type ="submit" id = "getitem_submit">Submit</button>
+        <script>
+            document.getElementById("getuser_submit").onclick(
+                window.location.href = "/item/" + document.getElementById("item").value);
+        </script>
+        
+    </body>
+</html>

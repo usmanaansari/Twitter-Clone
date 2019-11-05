@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+        <p><a href = "/index">Home</a></p>
+        <label>Enter a user to view who they're following </label>
+        <input type = "text" name = "username" id = "username">
+        <button type ="submit" id = "getuserfollowing_submit">Submit</button>
+        <script>
+            document.getElementById("getuserfollowing_submit").addEventListener("click", function(){
+                window.location.href = "/user/" + document.getElementById("username").value + "/following";
+            });
+        </script>
+        
+    </body>
+</html>

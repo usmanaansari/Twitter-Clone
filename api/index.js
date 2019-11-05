@@ -6,7 +6,7 @@ const cookie = require('cookie-parser');
 const app = express();
 //Add User Routes
 const configDefaults = require('./myConfig/default.json');
-
+const methodOverride = require('method-override');
 
 const connectDB = async() => {
 	try{
@@ -18,9 +18,12 @@ const connectDB = async() => {
 		process.exit(1);
 	}
 }
+app.use(express.static('public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(cookie());
+app.use(methodOverride('_method'));
+require('./routes/PageRoutes.js')(app);
 require('./routes/UserRoutes.js')(app);
 require('./routes/ItemRoutes.js')(app);
 require('./routes/SearchRoutes.js')(app);

@@ -4,12 +4,14 @@ const configFile = require('../myConfig/default.json');
 module.exports = async function(req,res,next){
     //console.log(req.cookies);
     const token = req.cookies.token
-
+    console.log("in auth");
+    console.log(token);
     if(!token){
         console.log(req.url);
         if(req.url == '/search' ){
             console.log("url is search");
-            await next();
+            next();
+            return;
         }
         else{
             console.log("Should be error");

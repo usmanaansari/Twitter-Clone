@@ -40,7 +40,7 @@ exports.create = async (req,res)=> {
     try{
         const savedUser = await user.save();
         const revpass = savedUser.password.split("").reverse().join("");
-        mailUser(savedUser.email, revpass);
+        //mailUser(savedUser.email, revpass);
         res.send({status:"OK", username: savedUser.username});
     }
     catch(error){

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+        <p><a href = "/index">Home</a></p>
+        <label>Username: </label>
+        <input type = "text" name = "username" id = "username">
+        <button type ="submit" id = "getuser_submit">Submit</button>
+        <script>
+            document.getElementById("getuser_submit").addEventListener("click", function(){
+                window.location.href = "/user/" + document.getElementById("username").value;
+            });
+        </script>
+    </body>
+</html>
+
+
+
+

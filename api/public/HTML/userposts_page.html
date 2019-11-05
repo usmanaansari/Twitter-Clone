@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+        <p><a href = "/index">Home</a></p>
+        <label>Which user's posts do you want? </label>
+        <input type = "text" name = "username" id = "username">
+        <button type ="submit" id = "getuserposts_submit">Submit</button>
+        <script>
+            document.getElementById("getuserposts_submit").addEventListener("click", function(){
+                window.location.href = "/user/" + document.getElementById("username").value + "/posts";
+            });
+        </script>
+    </body>
+</html>

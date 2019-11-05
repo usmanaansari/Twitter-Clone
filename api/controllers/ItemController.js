@@ -69,10 +69,10 @@ exports.deleteItem = async (req,res) =>{
             }
         }
         else{
-            res.send({status:"error", msg:"Item with that ID does not exist"});
+            res.status(400).send({status:"error", msg:"Item with that ID does not exist"});
         }
     }
     else{
-        res.send({status:"error", msg:"No user logged in"});
+        res.status(400).send({status:"error", msg:"No user logged in"});
     }
 };

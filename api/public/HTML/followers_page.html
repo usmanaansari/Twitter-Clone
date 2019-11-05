@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+    </head>
+    <body>
+        <p><a href = "/index">Home</a></p>
+        <label>Enter a user who's followers you want to view </label>
+        <input type = "text" name = "username" id = "username">
+        <button type ="submit" id = "getuserfollowers_submit">Submit</button>
+        <script>
+            document.getElementById("getuserfollowers_submit").addEventListener("click", function(){
+                window.location.href = "/user/" + document.getElementById("username").value + "/followers";
+            });
+        </script>
+    </body>
+</html>

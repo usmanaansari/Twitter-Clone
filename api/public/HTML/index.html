@@ -1,89 +1,29 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <link rel ="stylesheet" type="text/css" href ="../CSS/styling.css" media="screen"/>
+        <link type="text/css" href ="../CSS/styling.css" media="screen"/>
     </head>
     <body>  
             <br>
             <label>Welcome to Twooter! A simplified Twitter, where you Twoot! </label>
             <br>
             <br>
-            <form id ="adduserform" method="POST" action=/adduser>
-                <label>New Account:</label> 
-                <br>
-                <br>
-                <label>Username:</label> 
-                <input type = "text" name = "username" id = "newUsername">
-                <br>
-                <label>Password:</label>  
-                <input type = "text" name = "password" id = "newPassword">
-                <br>
-                <label>Email:</label>  <input type = "text" name = "email" id="newEmail">
-                <br>
-                <input type = "submit">
-                <br>
-            </form>
-            <br>
-            <br>
-            <form id = "verifyform" action = /verify method ="POST">
-                <label>Verify your account:</label>
-                <label>Email:</label> 
-                <input type = "text" name = "email">
-                <label>Verification Key:</label>  
-                <input type = "text" name = "key">
-                <input type = "submit" ">
-                <br>
-            </form>
-            <br>
-            <br>
-            <form id ="loginform" action = /login method ="POST">
-                <label>Login:</label>
-                <br>
-                <label>Username:</label>
-                <input type = "text" name ="username">
-                <br>
-                <label>Password: </label>
-                <input type = "text" name="password">
-                <br>
-                <input type = "submit">
-                <br>
-            </form>
-            <br>
-            <br>
+
+            <p><a href = "/register_page">Register</a></p>
+            <p><a href = "/verify_page">Verify</a></p>
+            <p><a href = "/login_page">Login</a></p>
+            <p><a href = "/search_page">Search</a></p>
+            <p><a href = "/user_page">Get User Info</a></p>
+            <p><a href = "/userposts_page">Get a User's Posts</a></p>
+            <p><a href = "/followers_page">Get a User's followers</a></p>
+            <p><a href = "/following_page">Check who a User is following</a></p>
+            <p><a href = "/additem_page">Add Item</a></p>
+            <p><a href = "/getitem_page">Get Item</a></p>
+            <p><a href = "/deleteitem_page">Delete Item</a></p>
+            
             <form id = "logoutForm" action = /logout method = "POST">
                 <label>Logout:</label>
                 <input type = "submit" placeholder="text">
-            </form>
-            <br>
-            <br>
-            <form id = "searchForm" action = /search method ="POST">
-                <label>Search for Items by Timestamp!</label>
-                <br>
-                <label>Timestamp: </label>
-                <input type = "text" name="timestamp">
-                <label>Limit: </label>
-                <input type = "text" name="limit">
-                <input type = "submit"> 
-            </form>
-            <br>
-            <br>
-            <form id ="additem" action = /additem method="POST">
-                <label>Add an Item!</label>
-                <br>
-                <label>Item Content: </label>
-                <input type="text" name="content">
-                <label>Child type: </label>
-                <input type="text" name="childType">
-                <input type="submit">
-            </form>
-            <br>
-            <br>
-            <form id = "getItem" action = /item/ method="GET">
-                <label>Get an Item by ID!</label>
-                <br>
-                <label> Example: http://manguy.cse356.compas.cs.stonybrook.edu/item/ + "An item's id!" </label>
-                <br>
-                <label> Example: http://manguy.cse356.compas.cs.stonybrook.edu/item/855 </label>
             </form>
     </body>      
 </html>
