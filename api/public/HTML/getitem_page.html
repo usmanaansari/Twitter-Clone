@@ -6,11 +6,12 @@
     <body>
         <p><a href = "/index">Home</a></p>
         <label>Item ID: </label>
-        <input type = "text" name = "item" id = "item">
+        <input type = "text" name = "id" id = "id">
         <button type ="submit" id = "getitem_submit">Submit</button>
         <script>
-            document.getElementById("getuser_submit").onclick(
-                window.location.href = "/item/" + document.getElementById("item").value);
+            document.getElementById("getitem_submit").addEventListener("click", function(){
+                window.location.href = "/item/" + document.getElementById("id").value;
+            });
         </script>
         
     </body>

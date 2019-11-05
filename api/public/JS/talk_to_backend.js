@@ -6,7 +6,7 @@ var delete_request = function(){
         params: {id: document.getElementById("itemid").value}
     }).then(response=>{
         if(response.status == 200){
-            document.getElementById("deleted").innerHTML = "Deleted tweet!";
+            document.getElementById("deleted").innerHTML = "Deleted item!";
             return response.json()
         }
         else{

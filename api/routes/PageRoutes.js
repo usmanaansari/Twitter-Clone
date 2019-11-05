@@ -37,4 +37,7 @@ module.exports = (app) =>{
     app.get("/following_page", (req,res)=>{
         res.sendFile(path.resolve('./public/HTML/following_page.html'));
     });
+    app.get("/followuser_page", (req,res)=>{
+        res.sendFile(path.resolve('./public/HTML/followuser_page.html'));
+    });
 };
